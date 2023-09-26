@@ -618,8 +618,8 @@ PlayerSettings:
   apiCompatibilityLevelPerPlatform: {}
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: semester-project-3_2_
-  metroPackageVersion: 
+  metroPackageName: semester-project-32
+  metroPackageVersion: 1.0.0.0
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
@@ -627,7 +627,7 @@ PlayerSettings:
   metroCertificateNotAfter: 0000000000000000
   metroApplicationDescription: semester-project-3_2_
   wsaImages: {}
-  metroTileShortName: 
+  metroTileShortName: semester-project-3_2_
   metroTileShowName: 0
   metroMediumTileShowName: 0
   metroLargeTileShowName: 0

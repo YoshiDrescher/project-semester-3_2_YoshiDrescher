@@ -6,7 +6,7 @@ public class PlayerMouseController : MonoBehaviour
 {
     [SerializeField] private Mover mover;
 
-    // Update is called once per frame
+    
     void Update()
     {
         if (Input.GetMouseButton(0))
