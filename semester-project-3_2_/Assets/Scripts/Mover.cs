@@ -11,7 +11,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(AgentRotate2d))]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CircleCollider2D))]
-public class Mover : MonoBehaviour
+public class Mover : MoverBase
 {
     [SerializeField] private float radius = .5f;
     [SerializeField] private Transform body;

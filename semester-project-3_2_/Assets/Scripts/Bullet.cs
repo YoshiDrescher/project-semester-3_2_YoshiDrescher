@@ -11,8 +11,13 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float despawnTime = 5;
     [SerializeField] private int damage = 1;
 
-    public void Shoot(Vector2 direction)
+    public void Shoot(MoverBase shooter, Vector2 targetedPosition)
     {
+        Vector2 direction = targetedPosition - shooter.GetPosition();
+        direction.Normalize();
+        
+        Physics2D.IgnoreCollision(shooter.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+        
         GetComponent<Rigidbody2D>().AddForce(direction * speed, ForceMode2D.Impulse);
         StartCoroutine(DespawnAfterTimeCoroutine());
     }

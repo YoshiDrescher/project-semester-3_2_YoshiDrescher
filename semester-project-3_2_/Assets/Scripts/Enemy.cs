@@ -1,11 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    
     [SerializeField] private Mover mover;
-    [SerializeField] private Mover playerMover;
     [SerializeField] private EnemyAnimator animator;
     [SerializeField] private float preferredDistanceToPlayer = 4;
     [SerializeField] private float targetingTime = 1;
@@ -20,7 +21,7 @@ public class Enemy : MonoBehaviour
         if (isTargetingPlayer)
             return;
         
-        float distanceToPlayer = Vector2.Distance(mover.GetPosition(), playerMover.GetPosition());
+        float distanceToPlayer = Vector2.Distance(mover.GetPosition(), PlayerManager.GetPlayerMover().GetPosition());
 
         if (distanceToPlayer <= preferredDistanceToPlayer)
         {
@@ -29,7 +30,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            mover.SetMovementTarget(playerMover.GetPosition());
+            mover.SetMovementTarget(PlayerManager.GetPlayerMover().GetPosition());
         }
     }
 
@@ -44,16 +45,16 @@ public class Enemy : MonoBehaviour
         
         
         Debug.Log("Shoot Player");
-        Vector2 shootDirection = playerMover.GetPosition() - mover.GetPosition();
-        shootDirection.Normalize();
-
-        float bulletSize = bulletPrefab.GetComponent<CircleCollider2D>().radius;
-        Vector2 bulletSpawnPosition = mover.GetPosition() + shootDirection * (mover.GetRadius() + bulletSize + .1f);
         
-        Bullet newBullet = Instantiate(bulletPrefab, bulletSpawnPosition, Quaternion.identity);
+        Bullet newBullet = Instantiate(bulletPrefab, mover.GetPosition(), Quaternion.identity);
         
-        newBullet.Shoot(shootDirection);
+        newBullet.Shoot(mover, PlayerManager.GetPlayerMover().GetPosition());
 
         isTargetingPlayer = false;
+    }
+
+    private void OnDestroy()
+    {
+        UIController.instance.IncreaseScore(1);
     }
 }
