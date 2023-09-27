@@ -18,6 +18,9 @@ public class PlayerAxisController : MonoBehaviour
 
     private void Update()
     {
+        if (mover == null)
+            Time.timeScale = 0;
+        
         inputDirection.x = Input.GetAxis("Horizontal");
         inputDirection.y = Input.GetAxis("Vertical");
         inputDirection.Normalize();
