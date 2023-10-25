@@ -11,8 +11,12 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float despawnTime = 5;
     [SerializeField] private int damage = 1;
 
+    public MoverBase shooter;
+
     public void Shoot(MoverBase shooter, Vector2 targetedPosition)
     {
+        this.shooter = shooter;
+        
         Vector2 direction = targetedPosition - shooter.GetPosition();
         direction.Normalize();
         
@@ -24,6 +28,13 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
+        Bullet otherBullet = other.gameObject.GetComponent<Bullet>();
+        if (otherBullet != null && otherBullet.shooter == shooter)
+        {
+            Physics2D.IgnoreCollision(shooter.GetComponent<Collider2D>(), other.collider);
+            return;
+        }
+        
         HealthPointManager target = other.collider.GetComponent<HealthPointManager>();
         if(target != null)
             target.DealDamage(damage);

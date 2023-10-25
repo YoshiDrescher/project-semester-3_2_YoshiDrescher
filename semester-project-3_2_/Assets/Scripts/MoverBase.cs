@@ -4,9 +4,20 @@ using UnityEngine;
 
 public class MoverBase : MonoBehaviour
 {
+    private Vector2 lookDirection;
     public Vector2 GetPosition()
     {
         return transform.position;
         
+    }
+
+    public Vector2 GetLookDirection()
+    {
+        return lookDirection;
+    }
+
+    public void SetLookDirection(Vector2 newLookDirection)
+    {
+        lookDirection = newLookDirection;
     }
 }

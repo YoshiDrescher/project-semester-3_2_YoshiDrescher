@@ -8,6 +8,7 @@ public class PlayerAxisController : MonoBehaviour
 {
     [SerializeField] private PhysicsMover mover;
     [SerializeField] private Bullet bulletPrefab;
+    [SerializeField] private Weapon equippedWeapon;
 
     private Vector2 inputDirection;
 
@@ -25,13 +26,19 @@ public class PlayerAxisController : MonoBehaviour
         inputDirection.y = Input.GetAxis("Vertical");
         inputDirection.Normalize();
 
-        if (mover != null && Input.GetMouseButtonDown(0))
+        if (equippedWeapon != null && Input.GetMouseButtonDown(0))
         {
-            Bullet newBullet = Instantiate(bulletPrefab, mover.GetPosition(), Quaternion.identity);
-
-            Vector2 targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            newBullet.Shoot(mover, targetPosition);
+            equippedWeapon.StartShooting();
         }
+        else if (equippedWeapon != null && Input.GetMouseButtonUp(0))
+        {
+            equippedWeapon.StopShooting();
+        }
+
+        Vector2 worldMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 moverToMouse = worldMousePosition - mover.GetPosition();
+        moverToMouse.Normalize();
+        mover.SetLookDirection(moverToMouse);
     }
 
     private void FixedUpdate()
