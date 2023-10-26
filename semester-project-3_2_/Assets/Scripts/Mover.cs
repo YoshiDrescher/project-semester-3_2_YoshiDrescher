@@ -23,14 +23,7 @@ public class Mover : MoverBase
         agent = GetComponent<NavMeshAgent>();
     }
     
-    void Update()
-    {
-        if (Input.GetMouseButton(0))
-        {
-            Vector2 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            agent.SetDestination(mouseWorldPosition);
-        } 
-    }
+    
 
     public void SetMovementTarget(Vector2 position)
     {

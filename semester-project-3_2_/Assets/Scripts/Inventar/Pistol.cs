@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Pistol : AmmoBasedWeapon
 {
+    [Header("Pistol")]
     [SerializeField] private Bullet bulletPrefab;
     public override void ShootBullet()
     {
