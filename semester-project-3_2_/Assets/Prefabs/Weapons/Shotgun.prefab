@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1
   owner: {fileID: 0}
+  displayName: Shotgun
   bulletsPerMagazine: 1
   currentBullets: 1
   timeBetweenBullets: 1

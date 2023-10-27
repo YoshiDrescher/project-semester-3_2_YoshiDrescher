@@ -11,6 +11,23 @@ public class PlayerAxisController : MonoBehaviour
     
     private int equippedWeaponIndex;
     [SerializeField] private List<Weapon> inventoryList = new List<Weapon>();
+
+    public event Action<Weapon> onWeaponAdded;
+    public event Action<Weapon> onWeaponRemoved;
+    public event Action<Weapon> onActiveWeaponSwitched;
+
+    public List<Weapon> GetInventory()
+    {
+        return inventoryList;
+    }
+
+    public Weapon GetEquippedWeapon()
+    {
+        if (inventoryList.Count == 0)
+            return null;
+        
+        return inventoryList[equippedWeaponIndex];
+    }
     
     private Vector2 inputDirection;
 
@@ -27,6 +44,8 @@ public class PlayerAxisController : MonoBehaviour
         inventoryList.Add(newWeapon);
         newWeapon.owner = mover;
         newWeapon.transform.SetParent(transform);
+        if (onWeaponAdded != null)
+            onWeaponAdded(newWeapon);
     }
 
     public void RemoveWeapon(Weapon weapon)
@@ -42,6 +61,11 @@ public class PlayerAxisController : MonoBehaviour
                 equippedWeaponIndex = 0;
         }
         inventoryList.Remove(weapon);
+        if (onWeaponRemoved != null)
+            onWeaponRemoved(weapon);
+        
+        if (inventoryList.Count > 0 && onActiveWeaponSwitched != null)
+            onActiveWeaponSwitched(inventoryList[equippedWeaponIndex]);
     }
     
     private void Update()
@@ -49,7 +73,6 @@ public class PlayerAxisController : MonoBehaviour
         if (mover == null)
         {
             GameLoopManager.SetGameState(GameLoopManager.GameState.GameOver);
-            Time.timeScale = 0;
             enabled = false;
             return;
         }   
@@ -79,6 +102,8 @@ public class PlayerAxisController : MonoBehaviour
             equippedWeaponIndex = inventoryList.Count - 1;
         if (equippedWeaponIndex >= inventoryList.Count)
             equippedWeaponIndex = 0;
+        if (onActiveWeaponSwitched != null)
+            onActiveWeaponSwitched(inventoryList[equippedWeaponIndex]);
         }
     }
 
